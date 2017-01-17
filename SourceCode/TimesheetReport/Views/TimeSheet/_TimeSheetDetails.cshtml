@@ -1,0 +1,273 @@
+﻿@model TimesheetReport.WebUI.ViewModels.TimeSheetViewModel
+
+@{
+    int index = 1;
+}
+
+@if (Model.TimeSheetItems?.Length != 0)
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th class="hiddenRow">
+                    <div><strong>No</strong></div>
+                </th>
+                <th class="hiddenRow">
+                    <div><strong>Project Name</strong></div>
+                </th>
+                <th class="hiddenRow">
+                    <div><strong>Tasks</strong></div>
+                </th>
+                <th class="hiddenRow">
+                    <div><strong>Hours</strong></div>
+                </th>
+                <th>
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        @foreach (var item in Model.TimeSheetItems)
+                {
+            <tr id="row_@item.WorkTimeId" class="worktime-item" data-id="@item.WorkTimeId">
+                <td>@(1 + "." + index++)</td>
+
+                <td id="projectName_@item.WorkTimeId">@item.ProjectName</td>
+
+                <td style="display:none" id="change_@item.WorkTimeId">
+                    @Html.DropDownListFor(m => m.Projects,
+                   Model.Projects.Select(h => new SelectListItem
+                   {
+                       Text = h.Name,
+                       Value = h.Id.ToString()
+                   }), new { @class = "form-control", @id = "selectedName_" + @item.WorkTimeId })
+                </td>
+
+                <td id="txtTasks_@item.WorkTimeId">@item.Tasks</td>
+
+                <td id="txtHours_@item.WorkTimeId">@item.Hours</td>
+                <td>
+                    <button class="btn btn-success btnEdit" id="@item.WorkTimeId">Edit</button>
+                    <button class="btn btn-danger btnConfirmDelele" id="@item.WorkTimeId">Delete</button>
+                </td>
+            </tr>
+        }
+        <tr class="trAppend">
+            <td>@(1 + "." + index++)</td>
+            <td class="projectList">
+                <select name="projectName" class="form-control" id="listProject">
+                    @foreach (var item in Model.Projects)
+                    {
+                        <option value="@item.Id">
+                            @item.Name
+                        </option>
+                    }
+                </select>
+            </td>
+            <td class="txtTasks">
+                <input type="text" class="form-control " name="Tasks" />
+            </td>
+            <td class="txtHours">
+                <input type="text" class="form-control " name="Hours" />
+            </td>
+            <td class="hiddenRow">
+                <button class="btn btn-success btnSave">Save</button>
+            </td>
+        </tr>
+    </table>
+}
+else
+{
+    <table class="table table-bordered">
+        <tr>
+            <td class="hiddenRow">
+                <div><strong>No</strong></div>
+            </td>
+            <td class="hiddenRow">
+                <div><strong>Project Name</strong></div>
+            </td>
+            <td class="hiddenRow">
+                <div><strong>Tasks</strong></div>
+            </td>
+            <td class="hiddenRow">
+                <div><strong>Hours</strong></div>
+            </td>
+            <td>
+                Actions
+            </td>
+        </tr>
+        <tr class="trAppend">
+            <td>@(index++)</td>
+            <td class="projectList">
+                <select name="projectName" class="form-control" id="listProject">
+                    @foreach (var item in Model.Projects)
+                {
+                        <option value="@item.Id">
+                            @item.Name
+                        </option>
+                    }
+                </select>
+            </td>
+            <td class="txtTasks">
+                <input type="text" class="form-control " name="Tasks" id="txtTask" />
+            </td>
+            <td class="txtHours">
+                <input type="text" class="form-control " name="Hours" id="txtHour" />
+            </td>
+            <td class="hiddenRow">
+                <button class="btn btn-success btnSave">Save</button>
+            </td>
+        </tr>
+    </table>
+}
+<script type="text/javascript">
+    $(function () {
+
+        function loadTimesheetDetail(singleDate, rowElement) {
+            $.ajax({
+                url: '@Url.Action("GetTimeSheetDetail", "Timesheet")',
+                data: {
+                    singleWorkTime: singleDate
+                },
+                type: 'GET',
+                success: function (data) {
+                    rowElement.html("<td colspan='6'>" + data + "</td>");
+
+                }
+            });
+        }
+
+        function loadEditedWorkTime(singleDate, rowElement) {
+            $.ajax({
+                url: '@Url.Action("GetTimeSheetDetail", "Timesheet")',
+                data: {
+                    singleWorkTime: singleDate
+                },
+                type: 'GET',
+                success: function (data) {
+                    rowElement.html("<td colspan='6'>" + data + "</td>");
+                }
+            });
+        }
+
+        function getTotalHours(startDate, endDate, rowWorkTime) {
+            $.ajax({
+                url: '@Url.Action("ReloadTimeSheet", "Timesheet")',
+                data: {
+                    startDate: startDate,
+                    endDate: endDate
+                },
+                type: 'GET',
+                success: function (data) {
+                    rowWorkTime.html(data);
+                }
+            });
+        }
+
+
+        $('.btnConfirmDelele').on('click', function () {
+            var taskId = $(this).attr('id');
+
+            $('#hiddenWorkTimeId').val(taskId);
+            $("#confirmDeleteModal").modal('show');
+
+            var btnCurrentDelete = $(this);
+            var chosenDate = btnCurrentDelete.parents('tr').parents('tr').prev('tr').data('id');
+
+            $('.btnDelete').on('click', function () {
+                $("#loaderDiv").show();
+                var taskId = $('#hiddenWorkTimeId').val();
+
+                $.ajax({
+                    url: '@Url.Action("DeleteTaskWorkTime", "Timesheet")',
+                    data: {
+                        TaskId: taskId
+                    },
+                    type: 'POST',
+                    success: function (result) {
+
+                        var rowWorkTime = btnCurrentDelete.parents('tr').parents('tr').prev('tr').find('td:last');
+                        getTotalHours(chosenDate, chosenDate, rowWorkTime);
+
+                        $("#loaderDiv").hide();
+                        $("#confirmDeleteModal").modal("hide");
+                        $("#row_" + taskId).remove();
+                    }
+                })
+            });
+        });
+
+        $('.btnSave').on('click', function () {
+            var btnSaveElement = $(this);
+            var chosenDate = btnSaveElement.parents('tr').parents('tr').prev('tr').data('id');
+            $.ajax({
+                method: 'POST',
+                url: "/TimeSheet/AddTimeSheet",
+                data: {
+                    ProjectId: $('#listProject :selected').val(),
+                    Tasks: $('input:text[name="Tasks"]').val(),
+                    Hours: $('input:text[name="Hours"]').val(),
+                    AddedDate: btnSaveElement.parents('tr').parents('tr').prev('tr').data('id')
+                },
+                datatype: "html",
+                success: function (data) {
+                    var rowWorkTime = btnSaveElement.parents('tr').parents('tr').prev('tr').find('td:last');
+                    getTotalHours(chosenDate, chosenDate, rowWorkTime);
+
+                    var tableElement = btnSaveElement.closest('table');
+                    var rowElement = tableElement.closest('tr');
+                    rowElement.html("");
+                    loadTimesheetDetail(chosenDate, rowElement);
+                }
+            });
+
+        });
+
+        $('.btnEdit').on('click', function () {
+            var btnEditWorkTime = $(this);
+
+            var btnEditId = $(this).attr('id');
+
+            var chosenDate = btnEditWorkTime.parents('tr').parents('tr').prev('tr').data('id');
+
+            var currentTD = $(this).parents('tr .worktime-item').find('td');
+            if ($(this).html() == 'Edit') {
+                currentTD = $(this).parents('tr .worktime-item').find('td');
+                $.each(currentTD, function () {
+                    $(this).prop('contenteditable', true);
+                    $('#projectName_' + btnEditId).hide();
+                    $('#change_' + btnEditId).show();
+                });
+
+            } else {
+                $.each(currentTD, function () {
+                    $(this).prop('contenteditable', false)
+                });
+                $.ajax({
+                    method: 'POST',
+                    url: '/TimeSheet/EditWorkTime',
+                    data: {
+                        Id: btnEditId,
+                        ProjectId: $('#selectedName_' + btnEditId).find(':selected').val(),
+                        Tasks: $('#txtTasks_' + btnEditId).text(),
+                        Hours: $('#txtHours_' + btnEditId).text(),
+                        AddedDate: btnEditWorkTime.parents('tr').parents('tr').prev('tr').data('id')
+                    },
+                    datatype: 'html',
+                    success: function () {
+                        var rowWorkTime = btnEditWorkTime.parents('tr').parents('tr').prev('tr').find('td:last');
+                        getTotalHours(chosenDate, chosenDate, rowWorkTime);
+
+                        var tableElement = btnEditWorkTime.closest('table');
+                        var rowElement = tableElement.closest('tr');
+                        rowElement.html("");
+                        loadEditedWorkTime(chosenDate, rowElement);
+                    }
+                });
+            }
+            $(this).html($(this).html() == 'Edit' ? 'Save' : 'Edit')
+        });
+    });
+</script>
+
+
+

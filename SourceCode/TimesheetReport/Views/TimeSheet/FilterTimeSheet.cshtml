@@ -1,0 +1,76 @@
+﻿@model TimesheetReport.WebUI.ViewModels.TimeSheetViewModel
+
+
+@{
+    ViewBag.Title = "My TimeSheet";
+    int i = 1;
+
+}
+
+@using (Html.BeginForm("FilterTimeSheet", "TimeSheet"))
+{
+    <div class="filter">
+        <label>Date Range</label>
+        <div class="container">
+            <div class="col-md-4">
+                <div class="input-group">
+                    <span class="input-group-addon">From &nbsp;</span>
+                    <input class="form-control datepicker startDate" type="text" name="StartDate" />
+                    <span class="input-group-addon">To &nbsp;</span>
+                    <input class="form-control datepicker endDate" type="text" name="EndDate" />
+                </div>
+
+            </div>
+            <div class="col-md-4">
+                <button class="btn btn-success btnFilter" type="submit">Filter</button>
+            </div>
+        </div>
+    </div>
+}
+
+@if (Model != null)
+{
+<table class="table table-bordered " style="border-collapse:collapse;">
+    <tbody>
+        <tr>
+            <td><strong>No</strong></td>
+            <td colspan="4"><strong>Date</strong></td>
+            <td><strong>Total Hours</strong></td>
+        </tr>
+        @foreach (var item in Model.ListFilterTimeSheet)
+            {
+            <tr>
+                <td class="hiddenRow">
+                    <div><strong>@(i++)</strong></div>
+                </td>
+                <td colspan="4" class="hiddenRow">
+                    <div><strong>@item.Date.ToString("MMMM dd, yyyy")</strong></div>
+                </td>
+                <td class="hiddenRow">
+                    <div><strong>@(item.TotalHours + "h")</strong></div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+}
+
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+
+            $(function () {
+                $('.datepicker').datepicker({
+                    format: 'M/dd/yyyy',
+                    autoclose: true,
+                    todayHighlight: true,
+                    orientation: "bottom auto",
+                    startDate:'-30m',
+                    endDate: '0'
+
+                });
+            });
+
+        });
+    </script>
+}

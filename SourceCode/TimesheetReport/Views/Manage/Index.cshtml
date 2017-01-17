@@ -1,0 +1,153 @@
+﻿@model TimesheetReport.Models.EditProfileViewModel
+
+@{
+    ViewBag.Title = "Edit Profile";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div>
+    <h4>Change your account settings</h4>
+    <div class="alert alert-success alert-dismissible @if (ViewBag.Success == null) { <text>hidden</text> } " role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Success!</strong> @ViewBag.Success
+    </div>
+
+    <hr />
+@using (Html.BeginForm("EditProfile", "Manage", FormMethod.Post, new { enctype = "multipart/form-data", @id = "frmUpdateProfile" }))
+{
+    @Html.AntiForgeryToken()
+        
+        <div class="form-group">
+            @Html.Label("Avatar", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @if (Model.AvatarId != Guid.Empty && Model.AvatarId != null)
+                {
+                    <img class="img-responsive" id="icon" alt="Your avatar" src="~/File/View?fileId=@Model.AvatarId" style="height: 250px; width: 280px;" onclick="chooseImage()">
+                }
+                else
+                {
+                    <img class="img-responsive" id="icon" alt="Your avatar" src="http://placehold.it/200x200" style="height: 250px; width: 280px;" onclick="chooseImage()">
+                }
+
+                @Html.HiddenFor(m => m.AvatarId)
+                <br />
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("First Name", new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" }) <br />
+                @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Last Name", new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" }) <br />
+                @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("English Name", new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.EnglishName, new { @class = "form-control" }) <br />
+                @Html.ValidationMessageFor(m => m.EnglishName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Gender", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EnumDropDownListFor(x => x.Gender, new { @class = "form-control" }) <br />
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Date of Birth", new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.DOB, Model.DOB.ToString("M/dd/yyyy"), new { @class = "form-control datepicker" }) <br />
+                @Html.ValidationMessageFor(m => m.DOB, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("ID Number", new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.IdNumber, new { @class = "form-control" }) <br />
+                @Html.ValidationMessageFor(m => m.IdNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-10">
+                <input type='file' class="hidden" name="file" id="imgInp" accept="image/png, image/jpeg" onchange="readURL(this);" />
+                <button type="submit" class="btn btn-success">
+                    <i class="fa fa-check"></i>
+                    Save
+                </button>
+            </div>
+        </div>
+
+                    }
+    
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            $('.datepicker').datepicker({
+                format: 'm/dd/yyyy',
+                autoclose: true,
+                todayHighlight: true,
+                orientation: "bottom auto",
+                
+            });
+
+            @*$(".btn-success").on('click',function (e) {
+                e.preventDefault();
+                var urlAction = '@Html.Raw(Url.Action("EditProfile", "Manage"))';
+                $.ajax({
+                    method: 'POST',
+                    url: urlAction,
+                    data: $("#frmUpdateProfile").serialize(),
+                    success: function (msg) {
+                        if (msg == 'Successful') {
+                            $(".alert-success").show();
+                        }
+                        else {
+                            $(".alert-danger").show();
+                        }
+                        
+                    }
+                });
+            });*@
+
+            $('#icon').on('click', function () {
+                chooseImage();
+            });
+
+
+            $('#linkClose').on('click', function () {
+                $('#noti').hide();
+            });
+        });
+        function chooseImage() {
+            $("input[id='imgInp']").click();
+        }
+
+        function readURL(input) {
+            console.log(input.files);
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#icon')
+                        .attr('src', e.target.result)
+                        .width(300)
+                        .height(250);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        
+    </script>
+}

@@ -1,0 +1,124 @@
+﻿@model TimesheetReport.WebUI.ViewModels.Projects.AddProjectModel
+@{
+    ViewBag.Title = "Add Project";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("AddProject", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", @id = "frmAddProject" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.Label("Icon", new { @class = "control-label col-md-2" })
+
+            <div class="col-md-10">
+                <img class="img-responsive" id="icon" alt="Your icon" src="http://placehold.it/200x200" style="height: 250px; width: 280px;" onclick="chooseImage()">
+                @Html.HiddenFor(m => m.IconId)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ClientName, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.ClientName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.ClientName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Status, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EnumDropDownListFor(m => m.Status, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.StartDate, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.StartDate, Model.StartDate.ToString("M/dd/yyyy"), new { @class = "form-control datepicker" })
+                @Html.ValidationMessageFor(m => m.StartDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProjectOwner, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.ProjectOwner, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.ProjectOwner, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Description, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type='file' class="hidden" name="file" id="imgInp" accept="image/png, image/jpeg" onchange="readURL(this);" />
+                <button type="submit" class="btn btn-success">
+                    <i class="fa fa-check"></i>&nbsp;Create
+                </button>
+                <a class="btn btn-danger" href="@Url.Action("AddProject", "Admin")" role="button">
+                    Cancel
+                </a>
+            </div>
+        </div>
+    </div>
+}
+
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            $('.datepicker').datepicker({
+                format: 'm/dd/yyyy',
+                autoclose: true,
+                todayHighlight: true,
+                orientation: "bottom auto",
+            });
+
+            $('#icon').on('click', function () {
+                chooseImage();
+            });
+
+
+            $('#linkClose').on('click', function () {
+                $('#noti').hide();
+            });
+        });
+
+        function chooseImage() {
+            $("input[id='imgInp']").click();
+        }
+
+        function readURL(input) {
+            console.log(input.files);
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#icon')
+                        .attr('src', e.target.result)
+                        .width(300)
+                        .height(250);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+}

@@ -1,0 +1,258 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{774B4CFE-092C-46BA-8FDC-DA052DF85CC5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TimesheetReport.Core</RootNamespace>
+    <AssemblyName>TimesheetReport.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac, Version=4.2.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.2.1\lib\net45\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Autofac.Integration.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.Mvc5.4.0.0\lib\net451\Autofac.Integration.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.Extended, Version=6.0.0.0, Culture=neutral, PublicKeyToken=05b7e29bdd433584, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.Extended.6.1.0.168\lib\net45\EntityFramework.Extended.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MediatR, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MediatR.2.1.0\lib\net45\MediatR.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.0\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.1.0\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.1.0\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.0\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.0\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.0\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Features\Equipments\AddEquipmentCommand.cs" />
+    <Compile Include="Features\Files\File.cs" />
+    <Compile Include="Features\Files\GetFileByFileIdQuery.cs" />
+    <Compile Include="Features\Files\UploadFileCommand.cs" />
+    <Compile Include="Features\Projects\AddProjectsCommand.cs" />
+    <Compile Include="Features\Projects\EditProjectsCommand.cs" />
+    <Compile Include="Features\Projects\GetListProjectsQuery.cs" />
+    <Compile Include="Features\Projects\GetProjectQuery.cs" />
+    <Compile Include="Features\Projects\Project.cs" />
+    <Compile Include="Features\TimeSheets\FilterTimeSheetByDateRangeQuery.cs" />
+    <Compile Include="Features\TimeSheets\AddWorkTimeCommand.cs" />
+    <Compile Include="Features\TimeSheets\DeleteTaskCommand.cs" />
+    <Compile Include="Features\TimeSheets\EditWorkTimeCommand.cs" />
+    <Compile Include="Features\TimeSheets\GetListTimeSheetQuery.cs" />
+    <Compile Include="Features\TimeSheets\GetTimeSheetDetailQuery.cs" />
+    <Compile Include="Features\TimeSheets\TimeSheet.cs" />
+    <Compile Include="Features\TimeSheets\WorkTime.cs" />
+    <Compile Include="Features\TRUsers\GetEquipmentsOfEmployeeQuery.cs" />
+    <Compile Include="Features\Equipments\Equipment.cs" />
+    <Compile Include="Features\TRUsers\GetProfileUserQuerry.cs" />
+    <Compile Include="Infrastructure\DAL\Migrations\TRContext\201612220230427_AddFileTable.cs" />
+    <Compile Include="Infrastructure\DAL\Migrations\TRContext\201612220230427_AddFileTable.Designer.cs">
+      <DependentUpon>201612220230427_AddFileTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Infrastructure\DAL\Migrations\TRContext\201612290339561_AddProjectAndWorkTime.cs" />
+    <Compile Include="Infrastructure\DAL\Migrations\TRContext\201612290339561_AddProjectAndWorkTime.Designer.cs">
+      <DependentUpon>201612290339561_AddProjectAndWorkTime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Infrastructure\DAL\Migrations\TRContext\201701040427314_ModifiedFileModelAddTypeColumn.cs" />
+    <Compile Include="Infrastructure\DAL\Migrations\TRContext\201701040427314_ModifiedFileModelAddTypeColumn.Designer.cs">
+      <DependentUpon>201701040427314_ModifiedFileModelAddTypeColumn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Infrastructure\DAL\Migrations\TRContext\201701040430224_ModifiedProjectModelChangeAvatarIdToIconId.cs" />
+    <Compile Include="Infrastructure\DAL\Migrations\TRContext\201701040430224_ModifiedProjectModelChangeAvatarIdToIconId.Designer.cs">
+      <DependentUpon>201701040430224_ModifiedProjectModelChangeAvatarIdToIconId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Infrastructure\DAL\Migrations\TRContext\201701050253471_ModifiedProjectsModelIconIdAllowNull.cs" />
+    <Compile Include="Infrastructure\DAL\Migrations\TRContext\201701050253471_ModifiedProjectsModelIconIdAllowNull.Designer.cs">
+      <DependentUpon>201701050253471_ModifiedProjectsModelIconIdAllowNull.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Infrastructure\DAL\Migrations\TRContext\201701170359107_AddEquipment2.cs" />
+    <Compile Include="Infrastructure\DAL\Migrations\TRContext\201701170359107_AddEquipment2.Designer.cs">
+      <DependentUpon>201701170359107_AddEquipment2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Infrastructure\DAL\Migrations\TRContext\201701170403540_AddEquipment3.cs" />
+    <Compile Include="Infrastructure\DAL\Migrations\TRContext\201701170403540_AddEquipment3.Designer.cs">
+      <DependentUpon>201701170403540_AddEquipment3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Infrastructure\DAL\Migrations\TRContext\201701170409405_AddEquipment4.cs" />
+    <Compile Include="Infrastructure\DAL\Migrations\TRContext\201701170409405_AddEquipment4.Designer.cs">
+      <DependentUpon>201701170409405_AddEquipment4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Infrastructure\Handler\Equipment\AddEquipmentCommandHandler.cs" />
+    <Compile Include="Infrastructure\Handler\Files\GetFileByFileIdQueryHandler.cs" />
+    <Compile Include="Infrastructure\Handler\Files\UploadFileCommandHandler.cs" />
+    <Compile Include="Infrastructure\Handler\Projects\AddProjectsCommandHandler.cs" />
+    <Compile Include="Infrastructure\Handler\Projects\EditProjectsCommandHandler.cs" />
+    <Compile Include="Infrastructure\Handler\Projects\GetListProjectsQueryHandler.cs" />
+    <Compile Include="Infrastructure\Handler\Projects\GetProjectQueryHandler.cs" />
+    <Compile Include="Infrastructure\Handler\TimeSheets\AddWorkTimeCommandHandler.cs" />
+    <Compile Include="Infrastructure\Handler\TimeSheets\FilterTimeSheetByDateRangeQueryHandler.cs" />
+    <Compile Include="Infrastructure\Handler\TimeSheets\GetListTimeSheetQueryHandler.cs" />
+    <Compile Include="Infrastructure\DAL\Migrations\TRContext\201612260958318_AddGender.cs" />
+    <Compile Include="Infrastructure\DAL\Migrations\TRContext\201612260958318_AddGender.Designer.cs">
+      <DependentUpon>201612260958318_AddGender.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Infrastructure\DAL\Migrations\TRContext\201612270855250_AddEquipment.cs" />
+    <Compile Include="Infrastructure\DAL\Migrations\TRContext\201612270855250_AddEquipment.Designer.cs">
+      <DependentUpon>201612270855250_AddEquipment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Infrastructure\Handler\TRUsers\GetEquipmentsOfEmployeeQueryHandler.cs" />
+    <Compile Include="Features\Projects\GetProjectsQuery.cs" />
+    <Compile Include="Infrastructure\Handler\TimeSheets\DeleteTaskCommandHandler.cs" />
+    <Compile Include="Infrastructure\Handler\TimeSheets\EditWorkTimeCommandHandler.cs" />
+    <Compile Include="Infrastructure\Handler\Projects\GetProjectsQueryHandler.cs" />
+    <Compile Include="Infrastructure\Handler\TimeSheets\GetTimeSheetDetailQueryHandler.cs" />
+    <Compile Include="Infrastructure\Handler\TRUsers\GetProfileUserQuerryHandler.cs" />
+    <Compile Include="Features\TRUsers\GetUserFullNameQuery.cs" />
+    <Compile Include="Features\TRUsers\RegisterUserCommand.cs" />
+    <Compile Include="Features\TRUsers\TRUser.cs" />
+    <Compile Include="Features\TRUsers\UpdateAgentStatusToPendingCommand.cs" />
+    <Compile Include="Features\TRUsers\UpdateUserProfileCommand.cs" />
+    <Compile Include="Features\TRUsers\UserRoles.cs" />
+    <Compile Include="Infrastructure\DAL\ManageUsersDbContext.cs" />
+    <Compile Include="Infrastructure\DAL\Migrations\TRContext\TRDbConfig.cs" />
+    <Compile Include="Infrastructure\DAL\Migrations\UserContext\201612190337531_FirstMigration.cs" />
+    <Compile Include="Infrastructure\DAL\Migrations\UserContext\201612190337531_FirstMigration.Designer.cs">
+      <DependentUpon>201612190337531_FirstMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Infrastructure\DAL\Migrations\TRContext\201612200330335_ModifyUser.cs" />
+    <Compile Include="Infrastructure\DAL\Migrations\TRContext\201612200330335_ModifyUser.Designer.cs">
+      <DependentUpon>201612200330335_ModifyUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Infrastructure\DAL\Migrations\UserContext\UserDbConfig.cs" />
+    <Compile Include="Infrastructure\DAL\TimesheetReportContext.cs" />
+    <Compile Include="Infrastructure\Handler\TRUsers\GetUserFullNameQueryHandler.cs" />
+    <Compile Include="Infrastructure\Handler\TRUsers\RegisterUserCommandHandler.cs" />
+    <Compile Include="Infrastructure\Handler\TRUsers\UpdateUserProfileCommandHandler.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Features\Utilities\SequentialGuidType.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Infrastructure\DAL\Migrations\TRContext\201612220230427_AddFileTable.resx">
+      <DependentUpon>201612220230427_AddFileTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Infrastructure\DAL\Migrations\TRContext\201612270855250_AddEquipment.resx">
+      <DependentUpon>201612270855250_AddEquipment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Infrastructure\DAL\Migrations\TRContext\201612290339561_AddProjectAndWorkTime.resx">
+      <DependentUpon>201612290339561_AddProjectAndWorkTime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Infrastructure\DAL\Migrations\TRContext\201701040427314_ModifiedFileModelAddTypeColumn.resx">
+      <DependentUpon>201701040427314_ModifiedFileModelAddTypeColumn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Infrastructure\DAL\Migrations\TRContext\201701040430224_ModifiedProjectModelChangeAvatarIdToIconId.resx">
+      <DependentUpon>201701040430224_ModifiedProjectModelChangeAvatarIdToIconId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Infrastructure\DAL\Migrations\TRContext\201701050253471_ModifiedProjectsModelIconIdAllowNull.resx">
+      <DependentUpon>201701050253471_ModifiedProjectsModelIconIdAllowNull.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Infrastructure\DAL\Migrations\TRContext\201701170359107_AddEquipment2.resx">
+      <DependentUpon>201701170359107_AddEquipment2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Infrastructure\DAL\Migrations\TRContext\201701170403540_AddEquipment3.resx">
+      <DependentUpon>201701170403540_AddEquipment3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Infrastructure\DAL\Migrations\TRContext\201701170409405_AddEquipment4.resx">
+      <DependentUpon>201701170409405_AddEquipment4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Infrastructure\DAL\Migrations\UserContext\201612190337531_FirstMigration.resx">
+      <DependentUpon>201612190337531_FirstMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Infrastructure\DAL\Migrations\TRContext\201612200330335_ModifyUser.resx">
+      <DependentUpon>201612200330335_ModifyUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Infrastructure\DAL\Migrations\TRContext\201612260958318_AddGender.resx">
+      <DependentUpon>201612260958318_AddGender.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

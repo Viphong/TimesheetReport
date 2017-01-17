@@ -1,0 +1,45 @@
+﻿@model TimesheetReport.WebUI.ViewModels.Equipment.MyEquipmentViewModel
+
+@{
+    ViewBag.Title = "My Equipments";
+    int index = 0;
+}
+<h2>@ViewBag.Title.</h2>
+
+@if (Model.Items.Length != 0)
+{
+    <table class="table">
+        <tr>
+            <th>No</th>
+            <th>Name</th>
+            <th>Code</th>
+            <th>Assign on</th>
+            <th>Assign by</th>
+        </tr>
+        @foreach (var item in Model.Items)
+        {
+            index = index + 1;
+            <tr>
+                <td>
+                    @index
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Code)
+                </td>
+                <td>
+                    @item.AssignOn.ToString("M/dd/yyyy")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AssignBy)
+                </td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <h3>Your list is empty</h3>
+}

@@ -1,0 +1,11 @@
+﻿@model TimesheetReport.WebUI.ViewModels.TimeSheetViewModel
+
+
+@foreach (var item in Model.ListTimeSheet)
+            {
+    <tr class="timesheet-item " data-id="@item.Date">
+        <td>
+            <strong>@(item.TotalHours + "h")</strong>
+        </td>
+    </tr>
+}

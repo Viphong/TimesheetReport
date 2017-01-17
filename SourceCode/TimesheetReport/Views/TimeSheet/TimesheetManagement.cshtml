@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "My Time Sheet";
+}
+
+<h2>@ViewBag.Title</h2>
+<div class="accordian-body in" id="timesheet-list-container" style="height: auto;"></div>
+<div id="#work-list-container"></div>
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            var startDate = $("#StartDate").val();
+            var endDate = $("#EndDate").val();
+            loadTimesheets(startDate, endDate);
+        });
+
+        var loadTimesheets = function (startDate, endDate) {
+            $.ajax({
+                url: '@Url.Action("GetListTimesheet", "Timesheet")',
+                data: {
+                    startDate: startDate,
+                    endDate: endDate
+                },
+                type: 'GET',
+                success: function (data) {  
+                    $("#timesheet-list-container").html(data);
+                }
+            });
+        }
+
+    </script>
+}

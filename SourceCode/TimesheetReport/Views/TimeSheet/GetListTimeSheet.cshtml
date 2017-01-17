@@ -1,0 +1,108 @@
+﻿
+@model TimesheetReport.WebUI.ViewModels.TimeSheetViewModel
+
+@{
+    ViewBag.Title = "My Time Sheet";
+    int i = 1;
+}
+
+<h2>@ViewBag.Title</h2>
+
+
+@{ Html.RenderAction("FilterTimeSheet", "TimeSheet");}
+
+<br />
+<div class="accordian-body in" id="demo1" style="height: auto;">
+    <table class="table table-bordered " style="border-collapse:collapse;">
+        <tbody>
+            <tr>
+                <td><strong>No</strong></td>
+                <td colspan="4"><strong>Date</strong></td>
+                <td><strong>Total Hours</strong></td>
+            </tr>
+            @foreach (var item in Model.ListTimeSheet)
+            {
+                <tr>
+                    <td class="hiddenRow">
+                        <div><strong>@(i++)</strong></div>
+                    </td>
+                    <td colspan="4" class="hiddenRow">
+                        <div><strong>@item.Date.ToString("MMMM dd, yyyy")</strong></div>
+                    </td>
+                    <td class="hiddenRow">
+                        <div><strong>@(item.TotalHours + "h")</strong></div>
+                    </td>
+                </tr>
+            }
+            <tr class="row-timesheet" data-id="abc">
+                <td>1</td>
+                <td colspan="4">Thursday December 29, 2016</td>
+                <td>0h</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td><strong>project</strong></td>
+                <td><strong>task</strong></td>
+                <td><strong>hours</strong></td>
+                <td><strong>action</strong></td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>Interns</td>
+                <td>Create timesheet</td>
+                <td>5h</td>
+                <td>
+                    <button class="btn-default">Edit</button>
+                    <button class="btn-default">Delete</button>
+                </td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>@Html.TextBox("Project")</td>
+                <td>@Html.TextBox("Task")</td>
+                <td>@Html.TextBox("Hours")</td>
+                <td>
+                    <button class="btn-default">Save</button>
+                </td>
+                <td>&nbsp;</td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+
+
+
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+
+            $(function () {
+                $('.datepicker').datepicker({
+                    format: 'M/dd/yyyy',
+                    autoclose: true,
+                    todayHighlight: true,
+                    orientation: "bottom auto",
+
+
+                });
+            });
+
+            //$('.btnFilter').on('click', function () {
+            //    var stardate = "StartDate";
+            //    var enddate = "EndDate";
+            //    $('.startDate').attr(stardate);
+            //    $('.endDate').attr(enddate);
+            //});
+
+            $(".row-timesheet").on("click", function () {
+                var id = abc;
+                //ajax call to GetTimesheetDetail
+                // var html = GetTimesheetDetail return
+                alert("clicked");
+            });
+        });
+    </script>
+}
