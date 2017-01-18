@@ -8,6 +8,9 @@ namespace TimesheetReport.WebUI.ViewModels.Equipment
     public class MyEquipmentViewModel
     {
         public MyEquipmentViewModelItem [] Items { get; set; }
+
+        public EquipmentViewModel [] EquimentItems { get; set; }
+       
     }
 
     public class MyEquipmentViewModelItem
@@ -19,6 +22,21 @@ namespace TimesheetReport.WebUI.ViewModels.Equipment
         public DateTime AssignOn { get; set; }
 
         public string AssignBy { get; set; }
+    }
+    public class EquipmentViewModel
+    {
+        public Guid Id { get; set; }
+
+        public string Name { get; set; }
+
+        public string Code { get; set; }
+
+        public EquipmentStatus Status { get; set; }
+
+        public DateTime CreatedOn { get; set; }
+
+        public string UsingBy { get; set; }
+        
     }
     public class AddEquipmentViewModel
     {

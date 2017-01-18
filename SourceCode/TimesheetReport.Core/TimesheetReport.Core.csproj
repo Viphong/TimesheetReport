@@ -104,6 +104,7 @@
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Features\Equipments\AddEquipmentCommand.cs" />
+    <Compile Include="Features\Equipments\GetEquipmentQuery.cs" />
     <Compile Include="Features\Files\File.cs" />
     <Compile Include="Features\Files\GetFileByFileIdQuery.cs" />
     <Compile Include="Features\Files\UploadFileCommand.cs" />
@@ -156,6 +157,7 @@
       <DependentUpon>201701170409405_AddEquipment4.cs</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\Handler\Equipment\AddEquipmentCommandHandler.cs" />
+    <Compile Include="Infrastructure\Handler\Equipment\GetEquipmentQueryHandler.cs" />
     <Compile Include="Infrastructure\Handler\Files\GetFileByFileIdQueryHandler.cs" />
     <Compile Include="Infrastructure\Handler\Files\UploadFileCommandHandler.cs" />
     <Compile Include="Infrastructure\Handler\Projects\AddProjectsCommandHandler.cs" />

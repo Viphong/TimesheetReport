@@ -22,9 +22,30 @@ namespace TimesheetReport.WebUI.Controllers
         // GET: Equipment
         public ActionResult Index()
         {
-            return View();
-        }
+            var query = new GetEquipmentQuery();
+            var equipments = mediator.Send(query);
 
+            var viewModelItemList = new List<EquipmentViewModel>();
+            foreach (var item in equipments)
+            {
+                viewModelItemList.Add(new EquipmentViewModel
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    Code = item.Code,
+                    Status = item.Status,
+                    CreatedOn = item.CreatedOn,
+                    UsingBy = item.AssignTo
+                });
+                
+            }
+            var viewModel = new MyEquipmentViewModel
+            {
+                EquimentItems = viewModelItemList.ToArray()
+            };
+            return View(viewModel);
+        }
+        
         [HttpGet]
         public ActionResult AddEquipment()
         {
@@ -78,7 +99,7 @@ namespace TimesheetReport.WebUI.Controllers
                         mediator.Send(command);
                         return RedirectToAction("Index", "Equipment");
                     }
-                    catch (Exception ex)
+                    catch
                     {
                         return View("Error");
                     }

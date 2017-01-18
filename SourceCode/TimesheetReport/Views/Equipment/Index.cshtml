@@ -1,8 +1,67 @@
-﻿
+﻿@model TimesheetReport.WebUI.ViewModels.Equipment.MyEquipmentViewModel
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    int index = 0;
 }
 
-<h2>Index</h2>
+<h2>@ViewBag.Title.</h2>
 
+<div class="navbar-form">
+    <div class="row">
+        <strong>Search :</strong>
+        @*@Html.TextBoxFor(model => model.SearchText, new { @class = "form-control input-sm", @placeholder = "Enter Project Name" })*@
+        <input type="button" value="Search" class="btn btn-info btn-sm" />
+        <a class="btn btn-primary btnCreate btn-sm" href="@Url.Action("AddEquipment","Equipment")">Create New</a>
+    </div>
+</div>
+<div class="form-group">
+    @if (Model.EquimentItems.Length != 0)
+    {
+      
+        <table class="table">
+            <tr>
+                <th>No</th>
+                <th>Name</th>
+                <th>Code Name</th>
+                <th>Status</th>
+                <th>CreatedOn</th>
+                <th>UsingBy</th>
+                <th>View Detail</th>
+            </tr>
+            @foreach (var item in Model.EquimentItems)
+            {
+                index = index + 1;
+                <tr>
+                    <td>
+                        @index
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Code)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @item.CreatedOn.ToString("M/dd/yyyy")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UsingBy)
+                    </td>
+                    <td>
+                        <a href="@Url.Action("DetailEquiment", "Equipment", new { Id = item.Id})">
+                            <i class="glyphicon glyphicon-edit"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+    else
+    {
+        <h3>Your list is empty</h3>
+    }
+</div>
